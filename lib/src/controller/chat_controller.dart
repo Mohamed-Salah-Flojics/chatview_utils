@@ -314,4 +314,21 @@ base class ChatController {
 
     return totalFrames * pixelsPerFrame;
   }
+
+  static final Expando<ValueNotifier<Message?>> _replyMessageNotifiers =
+      Expando();
+
+  /// Provides current replying message.
+  ValueNotifier<Message?> get replyMessageNotifier =>
+      _replyMessageNotifiers[this] ??= ValueNotifier<Message?>(null);
+
+  /// Helper method to assign reply message globally.
+  void assignReplyMessage(Message message) {
+    replyMessageNotifier.value = message;
+  }
+
+  /// Helper method to reset reply message globally.
+  void resetReplyMessage() {
+    replyMessageNotifier.value = null;
+  }
 }
